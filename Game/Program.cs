@@ -11,7 +11,15 @@ namespace ДЗ_3
     {
         static void Main(string[] args)
         {
-            Console.Write("Введите ник первого игрока: ");
+            Console.WriteLine("Введите количество игроков: ");
+            int number = int.Parse(Console.ReadLine());
+            string[] nicks = new string[number];
+
+            for (int i = 0; i < nicks.Length; i++)
+			{
+                Console.Write($"Введите ник {i} игрока: ");
+                nicks[i] = Console.ReadLine();
+			}
             string nickFirst = Console.ReadLine();
 
             Console.Write("Введите ник второго игрока: ");
