@@ -16,13 +16,12 @@ namespace ДЗ_3
 
             Console.Write("Введите ник второго игрока: ");
             string nick2 = Console.ReadLine();
-            int nickNumber = 0;     //ход игроков от 1-4
-            bool success = true;
-            string playersMove = String.Empty;
-            char answer = 'д';
+            int nickNumber = 0;                     //ход игроков от 1-4            
+            string playersMove = String.Empty;      //переменная для хранения ников игроков
+            char answer = 'д';                      //ответ для реванша
             
             Random r = new Random();
-            int gameNumber = r.Next(12, 50);
+            int gameNumber = r.Next(12, 13);
             bool revenge = true;
 
             while (revenge)
@@ -31,8 +30,8 @@ namespace ДЗ_3
 			    {
                     if(i == 0) playersMove = nick1;
                     else playersMove = nick2;
-                    Console.Write($"Случайное число {gameNumber} \nХод игрока {playersMove}: ");
-                    success = int.TryParse(Console.ReadLine(), out nickNumber);
+                    Console.Write($"\nСлучайное число {gameNumber} \nХод игрока {playersMove}: ");
+                    bool success = int.TryParse(Console.ReadLine(), out nickNumber);
                     while (nickNumber > 4 || !success || nickNumber <= 0) //проверка на введенное первым игроком значение
                     {
                         Console.Write("Вводите только числа от 1 до 4: ");
@@ -41,9 +40,12 @@ namespace ДЗ_3
                     gameNumber -= nickNumber;
 			        if (gameNumber == 0 || gameNumber < 0)
                     {
-                        Console.WriteLine($"Выиграл игрок {playersMove}");
-                        Console.Write("Реванш ? д/н");
-                        revenge = (answer == 'д')
+                        Console.WriteLine($"Значаение числа равно нулю. Выиграл игрок {playersMove}");
+                        Console.Write("Реванш ? д/н ");
+                        answer = Console.ReadKey().KeyChar;
+                        gameNumber = r.Next(12, 51);
+                        revenge = (answer == 'д')?true:false;
+                        break;
                     }
                 }
                
