@@ -11,57 +11,40 @@ namespace ДЗ_3
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Введите количество игроков: ");
+            Console.Write("Введите количество игроков: ");
             int number = int.Parse(Console.ReadLine());
             string[] nicks = new string[number];
 
             for (int i = 0; i < nicks.Length; i++)
 			{
-                Console.Write($"Введите ник {i} игрока: ");
+                Console.Write($"Введите ник {i + 1} игрока: ");
                 nicks[i] = Console.ReadLine();
 			}
-            string nickFirst = Console.ReadLine();
-
-            Console.Write("Введите ник второго игрока: ");
-            string nickSecond = Console.ReadLine();
-            string nick = String.Empty;
             int nickNumber = 0;
-
             Random r = new Random();
-            int gameNumber = r.Next(12, 50);
-
-            while (true)
-            {                
-                Console.Write($"Случайное число {gameNumber} \nХод игрока {nick}: ");
-                bool success = int.TryParse(Console.ReadLine(), out nickNumber);
-
-                while (nickNumber > 4 || !success || nickNumber <= 0) //проверка на введенное первым игроком значение
-                {
-                    Console.Write("Вводите только числа от 1 до 4: ");
-                    success = int.TryParse(Console.ReadLine(), out nickNumber);
+            char answer = 'д';
+            int gameNumber = r.Next(12, 50);            
+            while(answer == 'д')
+            {
+                for (int i = 0; i < nicks.Length; i++)
+                {                
+                    Console.Write($"Случайное число {gameNumber} \nХод игрока {nicks[i]}: ");
+                    bool success = int.TryParse(Console.ReadLine(), out nickNumber);
+                    while (nickNumber > 4 || !success || nickNumber <= 0) //проверка на введенное первым игроком значение
+                    {
+                        Console.Write("Вводите только числа от 1 до 4: ");
+                        success = int.TryParse(Console.ReadLine(), out nickNumber);
+                    }
+                    gameNumber -= nickNumber;
+                    if (gameNumber == 0 || gameNumber < 0)
+                    {
+                        Console.WriteLine($"Значение равно нулю. Выиграл игрок {nicks[i]}");
+                        Console.WriteLine("Реванш ? д/н");
+                        answer = Console.ReadKey().KeyChar;
+                        if(answer == 'д') gameNumber = r.Next(12, 50);
+                        else break;
+                    }
                 }
-                gameNumber -= nickNumber;
-                if (gameNumber == 0 || gameNumber < 0)
-                {
-                    Console.WriteLine($"Выиграл игрок {nick}");
-                    break;
-                }
-
-
-                //Console.Write($"Случайное число {gameNumber} \nХод игрока {Second}: ");
-                //success = int.TryParse(Console.ReadLine(), out nickNumber);
-
-                //while (nickNumber > 4 || !success || nickNumber <= 0) //проверка на введенное вторым игроком значение
-                //{
-                //    Console.Write("Вводите только числа от 1 до 4: ");
-                //    success = int.TryParse(Console.ReadLine(), out nickNumber);
-                //}
-                //gameNumber -= nickNumber;
-                //if (gameNumber == 0 || gameNumber < 0)
-                //{
-                //    Console.WriteLine($"Выиграл игрок {Second}");
-                //    break;
-                //}
             }
             Console.ReadKey();
         }
